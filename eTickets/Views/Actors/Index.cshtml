@@ -1,10 +1,9 @@
 ﻿@*Define model*@
 
 @model IEnumerable<Actor>
-
 @*Define ViewData*@
 
-@{ 
+@{
     ViewData["Title"] = "List of Actors";
 }
 
@@ -27,7 +26,7 @@
                 {
                     <tr class="text-center">
                         <td class="align-middle">
-                            <img class="rounded-circle" src="@item.ProfilePictureURL" alt="@item.FullName" style="max-width: 150px"/>
+                            <img class="rounded-circle" src="@item.ProfilePictureURL" alt="@item.FullName" style="max-width: 150px" />
                         </td>
                         <td class="align-middle">
                             @Html.DisplayFor(modelItem => item.FullName)
@@ -48,6 +47,4 @@
     </div>
 </div>
 
-<div style="position: fixed; right: 25px; bottom: 25px;" class="text-white">
-    <a asp-controller="Actors" asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle"></i>Add New</a>
-</div>
+@await Html.PartialAsync("_CreateItem", "Actors")
