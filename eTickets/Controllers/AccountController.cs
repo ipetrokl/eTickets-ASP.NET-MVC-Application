@@ -1,8 +1,10 @@
 ﻿using eTickets.Data;
+using eTickets.Data.Static;
 using eTickets.Data.ViewModels;
 using eTickets.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,14 @@ namespace eTickets.Controllers
             _signManager = signManager;
             _context = context;
         }
+
+        public async Task<IActionResult> Users()
+        {
+            var users = await _context.Users.ToListAsync();
+            return View(users);
+        }
+
+
         public IActionResult Login() => View(new LoginVM());
 
         [HttpPost]
@@ -49,6 +59,47 @@ namespace eTickets.Controllers
             TempData["Error"] = "Wrong credentials. Please, try again!";
             return View(loginVM);
         }
-        
+
+
+        public IActionResult Register() => View(new RegisterVM());
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterVM registerVM)
+        {
+            if (!ModelState.IsValid) return View(registerVM);
+
+            var user = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
+            if(user != null)
+            {
+                TempData["Error"] = "This email is alredy in use";
+                return View(registerVM);
+            }
+
+            var newUser = new ApplicationUser()
+            {
+                FullName = registerVM.FullName,
+                Email = registerVM.EmailAddress,
+                UserName = registerVM.EmailAddress
+            };
+            var newUserRespone = await _userManager.CreateAsync(newUser, registerVM.Password);
+
+            if(newUserRespone.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+            }
+            return View("RegisterCompleted");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signManager.SignOutAsync();
+            return RedirectToAction("Index", "Movies");
+        }
+
+        public IActionResult AccessDenied(string ReturnUrl)
+        {
+            return View();
+        }
     }
 }
