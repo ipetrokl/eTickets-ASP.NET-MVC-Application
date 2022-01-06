@@ -25,16 +25,16 @@
 
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false"><i class="bi bi-gear"></i> Management</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false"><i class="bi bi-gear"></i> Management</a>
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" asp-controller="Cinemas" asp-action="Index"><i class="bi bi-camera-reels"></i> Cinemas</a>
-                                    <a class="dropdown-item" asp-controller="Producers" asp-action="Index"><i class="bi bi-headset"></i> Producers</a>
-                                    <a class="dropdown-item" asp-controller="Actors" asp-action="Index"><i class="bi bi-person-square"></i> Actors</a>
-                                </div>
-                            </li>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-controller="Cinemas" asp-action="Index"><i class="bi bi-camera-reels"></i> Cinemas</a>
+                                <a class="dropdown-item" asp-controller="Producers" asp-action="Index"><i class="bi bi-headset"></i> Producers</a>
+                                <a class="dropdown-item" asp-controller="Actors" asp-action="Index"><i class="bi bi-person-square"></i> Actors</a>
+                            </div>
+                        </li>
                         }
 
 
@@ -63,7 +63,7 @@
 
     <footer class="border-top  text-muted">
         <div class="container">
-            &copy; 2022 - eTickets 
+            &copy; 2022 - eTickets
             by Ivan Petrović
         </div>
     </footer>
@@ -73,4 +73,6 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+//http://etickets.azurewebsites.net
 
